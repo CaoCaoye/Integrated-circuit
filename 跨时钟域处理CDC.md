@@ -84,3 +84,10 @@
     利用上升沿触发的寄存器（可以使用两级），寄存选择信号，降低由于异步select导致的亚稳态，同时配合下降沿触发的寄存器，使切换都发生在时钟低电平处。降低毛刺产生的概率。
 
     * ![Alt text](pictures/CDC_pct/image-20.png)
+
+# 同步常见错误用例
+* 存在信号未同步
+    * ![Alt text](pictures/CDC_pct/image-21.png)DC_pct/image-21.png)
+* 两个或多个时钟源的数据在同步之前相遇
+    * a. ![Alt text](pictures/CDC_pct/image-22.png)
+    * b. ![Alt text](pictures/CDC_pct/image-23.png)
