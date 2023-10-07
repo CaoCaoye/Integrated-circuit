@@ -43,11 +43,11 @@ AXI协议基于突发传输，定义了下列独立事务（一个事务可能�
 
 写数据的过程如下图所示：
 
-<div align="center"><img src=".\pictures/AXI_pct/1.png" alt="Alt text"><p>图 1</p></div> 
+<div align="center"><img src=".\../pictures/AXI_pct/1.png" alt="Alt text"><p>图 1</p></div> 
 
 读数据的过程如下图所示：
 
-<div align="center"><img src=".\pictures/AXI_pct/2.png" alt="Alt text"><p>图 2</p></div> 
+<div align="center"><img src=".\../pictures/AXI_pct/2.png" alt="Alt text"><p>图 2</p></div> 
 
 每一个通道都拥有自己的VALID与READY信号用于实现握手，其中VALID信号表示通道的地址、数据或控制信息已经可用，而READY信号则表示接收方已准备好接收信息，其中，读数据和写数据通道还拥有LAST信号，该信号用于指示当前传输是否为当前事务中的最后一次传输。
 
@@ -79,7 +79,7 @@ AXI协议基于突发传输，定义了下列独立事务（一个事务可能�
 
 一个典型的AXI系统结构如下：
 
-<div align="center"><img src=".\pictures/AXI_pct/3.png" alt="Alt text"><p>图 3</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/3.png" alt="Alt text"><p>图 3</p></div>
 
 AXI协议为以下接口提供了单一的接口定义：
 
@@ -240,7 +240,7 @@ AXI协议使用低有效复位信号ARESETn，该信号是可以异步拉低，�
 
 在ARESETn被释放后的下一个时钟上升沿，主设备可以拉高ARVALID、AWVALID与WVALID信号，如下图所示：
 
-<div align="center"><img src=".\pictures/AXI_pct/4.png" alt="Alt text"><p>图 4</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/4.png" alt="Alt text"><p>图 4</p></div>
 
 ### 基本读写事务
 
@@ -252,19 +252,19 @@ AXI协议使用低有效复位信号ARESETn，该信号是可以异步拉低，�
 
 在下图中，源端在T1之后给出地址、数据或控制信息，并令VALID有效，在T2之后，目的端检测到VALID有效并给出READY有效信息，在T3阶段传输会发生，因此在T3阶段及之前，源端不能释放或改变需要传输的信息。
 
-<div align="center"><img src=".\pictures/AXI_pct/5.png" alt="Alt text"><p>图 5</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/5.png" alt="Alt text"><p>图 5</p></div>
 
 **源端必须在令VALID信号有效之后再等待READY信号有效，一旦VALID有效，源端必须等待握手发生，即在保持VALID不变的情况下，等待目的端的READY信号有效。**
 
 在下图中，目的端首先在T1阶段之后令READY信号有效，源端在T2阶段之后给出地址、数据或控制信息，并令VALID有效，然后在T3阶段开始传输，在这种情况下，传输只消耗了一个时钟周期，而在上面那种情况下，则消耗了两个时钟周期。
 
-<div align="center"><img src=".\pictures/AXI_pct/6.png" alt="Alt text"><p>图 6</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/6.png" alt="Alt text"><p>图 6</p></div>
 
 **目的端可以在自身READY信号无效的情况下，等待源端的VALID信号有效，这一条规则和上一条规则必须同时遵守，否则可能造成死锁等待，同时，在VALID有效前，即使READY已经有效，也可以再次令READY无效。**
 
 在下图中，两端的VALID/READY信号同时有效，则传输立刻在下一个时钟周期开始：
 
-<div align="center"><img src=".\pictures/AXI_pct/7.png" alt="Alt text"><p>图 7</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/7.png" alt="Alt text"><p>图 7</p></div>
 
 #### 通道信号需求
 
@@ -359,7 +359,7 @@ AXI协议要求各个通道间必须保持如下关系：
 
 依赖关系图如下：
 
-<div align="center"><img src=".\pictures/AXI_pct/8.png" alt="Alt text"><p>图 8</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/8.png" alt="Alt text"><p>图 8</p></div>
 
 #### 写传输依赖
 
@@ -376,7 +376,7 @@ AXI协议要求各个通道间必须保持如下关系：
 
 依赖关系图如下：
 
-<div align="center"><img src=".\pictures/AXI_pct/9.png" alt="Alt text"><p>图 9</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/9.png" alt="Alt text"><p>图 9</p></div>
 
 #### AXI4写响应依赖
 
@@ -399,7 +399,7 @@ AXI协议要求各个通道间必须保持如下关系：
 
 依赖关系图如下：
 
-<div align="center"><img src=".\pictures/AXI_pct/10.png" alt="Alt text"><p>图 10</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/10.png" alt="Alt text"><p>图 10</p></div>
 
 ### 事务结构
 
@@ -972,7 +972,7 @@ AXI4协议不要求特定的单拷贝原子大小，系统可以支持不同的�
 * 处理器、DSP、DRAM控制器、DMA控制器、外设、SRAM以及关联的互联器都在一个32bit的单拷贝原子组中。
 * 处理器、DSP、DRAM控制器以及关联的互联器也在一个64bit的单拷贝原子组中。
 
-<div align="center"><img src=".\pictures/AXI_pct/11.png" alt="Alt text"><p>图 11</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/11.png" alt="Alt text"><p>图 11</p></div>
 
 事务的原子性只有在它的起始地址正确对齐时才能得到保证，例如，对于一个64bit的单拷贝原子组来说，如果突发事务的地址没有对齐到8字节边界，那么该事务就没有任何64bit单拷贝原子保证。
 
@@ -1247,7 +1247,7 @@ CACTIVE仅用于没有下电或上电序列支持的某些外设的时钟控制�
 
 下列是这CSYSREQ与CSYSACK信号的时序图：
 
-<div align="center"><img src=".\pictures/AXI_pct/12.png" alt="Alt text"><p>图 12</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/12.png" alt="Alt text"><p>图 12</p></div>
 
 在序列开始时，CSYSREQ与CSYSACK信号都为高电平，在T1时刻，系统时钟控制器拉低CSYSREQ表示请求外设进入低功耗状态，外设在T2时刻拉低CSYSACK信号响应请求，在T3时刻，系统时钟控制器拉高CSYSREQ信号请求外设退出低功耗状态，在T4时刻，外设拉高CSYSACK信号响应请求。
 
@@ -1257,7 +1257,7 @@ CACTIVE仅用于没有下电或上电序列支持的某些外设的时钟控制�
 
 下图是外设接受系统低功耗请求时的时序图：
 
-<div align="center"><img src=".\pictures/AXI_pct/13.png" alt="Alt text"><p>图 13</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/13.png" alt="Alt text"><p>图 13</p></div>
 
 在T1时刻，系统时钟控制器拉低CSYSREQ信号以请求外设进入低功耗状态，在外设识别到这个请求后，执行了自己的下电序列，并在T2时刻拉低了CACTIVE信号用来表示时钟信号可以被移除。在T3时刻，外设拉低CSYSACK信号通知系统时钟控制器该外设已进入低功耗模式，
 
@@ -1267,7 +1267,7 @@ CACTIVE仅用于没有下电或上电序列支持的某些外设的时钟控制�
 
 下图是外设拒绝系统低功耗请求时的时序图：
 
-<div align="center"><img src=".\pictures/AXI_pct/14.png" alt="Alt text"><p>图 14</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/14.png" alt="Alt text"><p>图 14</p></div>
 
 在T1时刻，系统时钟控制器拉低CSYSREQ信号以请求外设进入低功耗状态，在T2时刻外设响应该请求，但此时仅拉低了CSYSACK信号而并没有拉低CACTIVE信号，因此系统时钟控制器必须维持时钟，并且在执行了低功耗状态退出序列后才能发起另一个低功耗请求。在T3时刻，系统时钟控制器通过拉高CSYSREQ开始了低功耗状态退出序列，在T4时刻，外设拉高CSYSACK表示完成了低功耗状态退出序列。
 
@@ -1277,13 +1277,13 @@ CACTIVE仅用于没有下电或上电序列支持的某些外设的时钟控制�
 
 系统时钟控制器触发退出序列：
 
-<div align="center"><img src=".\pictures/AXI_pct/15.png" alt="Alt text"><p>图 15</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/15.png" alt="Alt text"><p>图 15</p></div>
 
 在T1时刻，系统时钟控制器拉高CSYSREQ信号以请求退出低功耗状态，然后使能时钟，外设识别到CSYSREQ信号为高电平后开始执行其自身的上电序列，并在T2时刻拉高CACTIVE信号表示它需要时钟信号，然后外设在T3时刻拉高CSYSACK完成退出序列。
 
 外设触发退出序列：
 
-<div align="center"><img src=".\pictures/AXI_pct/16.png" alt="Alt text"><p>图 16</p></div>
+<div align="center"><img src=".\../pictures/AXI_pct/16.png" alt="Alt text"><p>图 16</p></div>
 
 在T1时刻外设拉高CACTIVE信号以通知其需要时钟信号，然后系统时钟控制器必须恢复时钟。
 
