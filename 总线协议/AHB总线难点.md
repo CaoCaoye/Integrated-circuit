@@ -1,5 +1,5 @@
 ## AHB协议中Hready_in和Hready_out深入理解
-### Hread_out和Hready_in信号
+### Hready_out和Hready_in信号
 - **Hready_out**
 是slave的一个输出信号，用来判断slave是否准备好接受master传输过来的数据，高电平有效，为低时表示slave未准备好，从而会延长data phase。
 
