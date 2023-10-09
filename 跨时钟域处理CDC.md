@@ -87,7 +87,7 @@
 
 # 同步常见错误用例
 * 存在信号未同步
-    * ![Alt text](pictures/CDC_pct/image-21.png)DC_pct/image-21.png)
+    * ![Alt text](pictures/CDC_pct/image-21.png)
 * 两个或多个时钟源的数据在同步之前相遇
     * a. ![Alt text](pictures/CDC_pct/image-22.png)
     * b. ![Alt text](pictures/CDC_pct/image-23.png)
