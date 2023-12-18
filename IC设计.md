@@ -209,7 +209,6 @@ $$ P = C·V^2·f$$
 #### 1.2.2.1 吞吐率
 采用**流水线或者类似方法**来提高吞吐率，见下例N倍累加电路：
 
-![Alt text](pictures/IC设计_pct/image-21.png)
 <div align="center"><img src="pictures/IC设计_pct/image-21.png" alt="Alt text"><p>图 21</p></div> 
 
 ```verilog
