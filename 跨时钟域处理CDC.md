@@ -99,31 +99,31 @@
 1. 使用多级同步
 <div align="center"><img src="pictures/CDC_pct/image-24.png" alt="Alt text"><p>图 24</p></div> 
 
-1. 避免合并早期同步阶段的信号
+2. 避免合并早期同步阶段的信号
 <div align="center"><img src="pictures/CDC_pct/image-25.png" alt="Alt text"><p>图 25</p></div> 
 
-1. 同步前寄存组合信号
+3. 同步前寄存组合信号
 <div align="center"><img src="pictures/CDC_pct/image-26.png" alt="Alt text"><p>图 26</p></div> 
 
-1. 考虑亚稳态延迟
+4. 考虑亚稳态延迟
 <div align="center"><img src="pictures/CDC_pct/image-27.png" alt="Alt text"><p>图 27</p></div> 
 
-1. 确保足够的时钟速率
+5. 确保足够的时钟速率
 > 信号发送域中的时钟周期应至少是接收域时钟周期的1.5倍。发送时钟周期过短会导致信号不总是被采样。如果不能满足这个条件，那么最好使用请求-确认机制来控制跨域信号的切换。
 
-1. 永远不要假设同步
+6. 永远不要假设同步
 > 当使用域中另一个设计器的模块中的网络或总线时，不要假定网络已为您同步。如有必要，请始终检查并使用同步器。
 
-1. 反馈信号
+7. 反馈信号
 <div align="center"><img src="pictures/CDC_pct/image-28.png" alt="Alt text"><p>图 28</p></div> 
 
-1. 避免同步阶段之间的逻辑
+8. 避免同步阶段之间的逻辑
 > 避免在同步器的触发器之间放置任何组合逻辑，因为这可能会降低同步器的MTBF。组合逻辑的输出可能会出现毛刺，并导致时序问题，最终导致亚稳态。
 <div align="center"><img src="pictures/CDC_pct/image-29.png" alt="Alt text"><p>图 29</p></div> 
 
-1.  软件驱动信号
+9.  软件驱动信号
 > 由软件驱动的信号不应在没有同步的情况下用于接收域的逻辑。否则将导致时序违规并导致亚稳态。
 
-1.  同步后不要联合收割机信号
+10.  同步后不要联合收割机信号
 > 接收域中不同同步器的输出无法组合并用于其他地方，因为无法保证它们的同步顺序，因此有可能采样错误的数据。如果两个信号必须在接收域中组合使用，那么最好在发送域中组合它们或使用一些其他方法来克服相干性问题。
 <div align="center"><img src="pictures/CDC_pct/image-30.png" alt="Alt text"><p>图 30</p></div> 
