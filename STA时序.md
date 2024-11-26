@@ -135,3 +135,51 @@ DC得到实际数据到达的时间和我们要求的时间后，进行比较。
 - **处理方法**：数据从reg0拍出后，在目标时钟域中进行打拍两拍处理（源时钟和目标时钟为同步时钟），避免亚稳态问题
 
 <div align="center"><img src=".\pictures/STA_pct/image3-3.png" alt="Alt text"><p>图 3-3</p></div> 
+
+# 四、clock_gating_check
+门控时钟是RTL级进行低功耗设计的最常用方法，能够有效降低动态功耗。在实际使用中，一般用ICG（集成门控时钟单元）来完成clock gating。ICG电路和时序如下：
+
+<div align="center"><img src=".\pictures/STA_pct/image4-1.png" alt="Alt text"><p>图 4-1</p></div> 
+
+通常来说，工艺库已经集成了ICG，在做门控时钟的时候其实不用考虑那么多。如果在实际设计中，工艺库未提供ICG，需要自己搭建一个门控时钟电路，那么在布局布线的时候可能要注意，不能将期间摆的太远，否则线延迟等会让这个结构失去其意义。
+
+当门控信号控制了逻辑单元中时钟信号的路径时，我们会进行Clocl Gating check。我们根据下图了解一些定义，这样比较直观：
+
+<div align="center"><img src=".\pictures/STA_pct/image4-2.png" alt="Alt text"><p>图 4-2</p></div> 
+
+因此，我们需要明确什么样的电路会被工具分析为门控时钟：
+1. Gating cell的输出是作为时钟信号进行使用，即连接到了后级逻辑单元的时钟端口。
+2. Gating pin的输入非时钟信号；若Gating pin的输入为时钟信号，则其必须不连接后级逻辑单元的时钟端口。
+3. 对于上图简单的与门控制，工具可以较好的推断；但对于复杂结构，需要自己添加约束来进行检查。
+
+<div align="center"><img src=".\pictures/STA_pct/image4-3.png" alt="Alt text"><p>图 4-3</p></div> 
+
+运用提到的定义，对于上图来说，CLKB才是clock signal。接下来我们以这个电路为例看看如何进行clock gating check（对于这个与门来说，有些类似于data to data check）：
+首先定义两个时钟：
+create_clock -name CLKA -period 10 -waveform {0 5}  [get_ports CLKA]
+create_clock -name CLKB -period 10 -waveform {0 5}  [get_ports CLKB]
+
+我们要保证时钟切换的时候不能产生一些毛刺，也不能产生对时钟有影响的结果。对于此电路来说，gating cell是一个与门，那么gating pin的信号变化只能发生在clock pin的低电平状态。则setup check要求门控信号在时钟信号变高前变化；hold check要求门控信号只能在时钟下降沿之后进行改变。时序图如图，gating pin的变化要落在5-10ns间，才能满足门控时钟的要求。
+
+<div align="center"><img src=".\pictures/STA_pct/image4-4.png" alt="Alt text"><p>图 4-4</p></div> 
+
+setup check的时序报告：
+
+<div align="center"><img src=".\pictures/STA_pct/image4-5.png" alt="Alt text"><p>图 4-5</p></div> 
+
+同样地，我们可以看看hold check的时序报告：
+
+<div align="center"><img src=".\pictures/STA_pct/image4-6.png" alt="Alt text"><p>图 4-6</p></div> 
+
+可以看到，在5ns时进行hold check是非常严苛的。由于gating signal的变化过于迅速，导致hold check失败。这个问题可以用我们前面提到的半周期进行处理。我们将寄存器的采样边沿改为负沿：
+
+<div align="center"><img src=".\pictures/STA_pct/image4-7.png" alt="Alt text"><p>图 4-7</p></div> 
+
+这样的话，gating signal在负沿launch，留给时序检查的周期就剩下了半个周期，较好满足hold time：
+
+<div align="center"><img src=".\pictures/STA_pct/image4-8.png" alt="Alt text"><p>图 4-8</p></div> 
+
+# 补充概念
+## OCV
+> OCV(on-chip variation) OCV是指由于工艺、电源电压(V)和温度(T)在芯片不同区域上的差异而导致的性能变化。这些变化会影响芯片的时序特性，使得同一芯片的不同部分可能处于不同的PVT条件下。为了应对这种变化，设计者需要在静态时序分析(STA)中引入OCV分析，通过降额(derate)特定路径的延迟来模拟OCV的影响。
+
